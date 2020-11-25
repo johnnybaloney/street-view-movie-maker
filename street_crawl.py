@@ -5,12 +5,12 @@ from API_KEYS import API_KEY_DIRECTIONS, API_KEY_STREETVIEW
 '''Google Street View Movie Maker
 
 Usage is:
-	python2 ./street_crawl.py lat1 lon1 lat2 lon2 output_filestem picsize
+	python3 ./street_crawl.py lat1 lon1 lat2 lon2 output_filestem picsize
 
 640x640 is the maximum resolution allowed by the Google Street View API.
 
 For example, to make a one-second video of the entrance of Joshua Treet National Park at a 640x640 resolution:
-	python2 ./street_crawl.py 33.669793 -115.802125 33.671796 -115.801851 joshua_tree 640x640
+	python3 ./street_crawl.py 33.669793 -115.802125 33.671796 -115.801851 joshua_tree 640x640
 
 Note: usage requires your own API keys. API keys should be placed in a file called API_KEYS.py, with two variables called API_KEY_DIRECTIONS and API_KEY_STREETVIEW, e.g.:
 
@@ -23,7 +23,7 @@ Note: usage requires your own API keys. API keys should be placed in a file call
 '''
 
 def main(lat_lon_A, lat_lon_B, filestem, picsize):
-	print "Tracing path from ({0}) to ({1})".format(lat_lon_A, lat_lon_B)
+	print ("Tracing path from ({0}) to ({1})".format(lat_lon_A, lat_lon_B))
 	# Request driving directions from A to B
 	gd = googlemaps.Client(key=API_KEY_DIRECTIONS)
 	directions_result = gd.directions(origin=lat_lon_A, destination=lat_lon_B, mode="driving")
@@ -33,8 +33,8 @@ def main(lat_lon_A, lat_lon_B, filestem, picsize):
 	look_points_rough = [item for sequence in dense_points for item in sequence]
 	# Remove unnecessary points
 	look_points = clean_look_points(look_points_rough)
-	print "For this route, there are {0} images to download.\n".format(len(look_points))
-	continue_opt = raw_input('Would you like to download them all Type yes to proceed; otherwise, program halts.\n')
+	print ("For this route, there are {0} images to download.\n".format(len(look_points)))
+	continue_opt = input('Would you like to download them all Type yes to proceed; otherwise, program halts.\n')
 	if continue_opt not in ['Yes','yes']:
 		return
 	# Download sequence of images (up to a limit? What's the limit in a day?)
