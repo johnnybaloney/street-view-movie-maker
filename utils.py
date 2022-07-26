@@ -313,6 +313,8 @@ def prune_repeated_images_from_list(list_of_files):
 def make_video(base_string, rate=20, video_string=None, picsize="640x640", basepath="./photos"):
 	if video_string is None:
 		video_string = base_string
+        print(basepath)
+        print(base_string)
 	subprocess.call("ffmpeg -r {0} -f image2 -s {3} -i {4}/{1}%d.jpg -vcodec libx264 -crf 25 -pix_fmt yuv420p {2}.mp4 -y".format(rate, base_string, video_string, picsize, basepath), shell=True)
 
 

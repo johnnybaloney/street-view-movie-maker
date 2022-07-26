@@ -5,13 +5,19 @@ from API_KEYS import API_KEY_DIRECTIONS, API_KEY_STREETVIEW
 '''Google Street View Movie Maker
 
 Usage is:
-	python2 ./street_crawl.py lat1 lon1 lat2 lon2 output_filestem
+	python2 ./street_crawl.py lat1 lon1 lat2 lon2 output_filestem picsize
 
 
-For example, to make a one-second video of the entrance of Joshua Treet National Park:
-	python2 ./street_crawl.py 33.669793 -115.802125 33.671796 -115.801851 joshua_tree
+For example, to make a one-second video of the entrance of Joshua Treet National Park at a 640x640 resolution:
+	python2 ./street_crawl.py 33.669793 -115.802125 33.671796 -115.801851 joshua_tree 640x640
 
-Note: usage requires your own API keys.
+Note: usage requires your own API keys. API keys should be placed in a file called API_KEYS.py, with two variables called API_KEY_DIRECTIONS and API_KEY_STREETVIEW, e.g.:
+
+    ---
+    API_KEYS.py
+    ---
+    API_KEY_DIRECTIONS="XXXXXXXXXXXXXXXXX"
+    API_KEY_STREETVIEW="XXXXXXXXXXXXXXXXX"
 
 '''
 
@@ -31,7 +37,7 @@ def main(lat_lon_A, lat_lon_B, filestem, picsize):
 	if continue_opt not in ['Yes','yes']:
 		return
 	# Download sequence of images (up to a limit? What's the limit in a day?)
-	# download_images_for_path(API_KEY_STREETVIEW, filestem, look_points, picsize=picsize)
+	download_images_for_path(API_KEY_STREETVIEW, filestem, look_points, picsize=picsize)
 	# Assign images new filenames (and remove bad images)
 	line_up_files(filestem, new_dir="./lineup-{0}/".format(filestem))
 	# Convert sequence of images to video

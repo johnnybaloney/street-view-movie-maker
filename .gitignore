@@ -3,3 +3,4 @@ API_KEY*
 *.pyc
 *.mp4
 sandbox.py
+lineup*/*
