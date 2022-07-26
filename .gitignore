@@ -4,3 +4,4 @@ API_KEY*
 *.mp4
 sandbox.py
 lineup*/*
+debug.log

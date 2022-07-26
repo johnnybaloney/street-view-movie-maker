@@ -7,6 +7,7 @@ from API_KEYS import API_KEY_DIRECTIONS, API_KEY_STREETVIEW
 Usage is:
 	python2 ./street_crawl.py lat1 lon1 lat2 lon2 output_filestem picsize
 
+640x640 is the maximum resolution allowed by the Google Street View API.
 
 For example, to make a one-second video of the entrance of Joshua Treet National Park at a 640x640 resolution:
 	python2 ./street_crawl.py 33.669793 -115.802125 33.671796 -115.801851 joshua_tree 640x640
