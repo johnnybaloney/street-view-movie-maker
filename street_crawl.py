@@ -24,6 +24,7 @@ Note: usage requires your own API keys. API keys should be placed in a file call
     API_KEY_DIRECTIONS="XXXXXXXXXXXXXXXXX"
     API_KEY_STREETVIEW="XXXXXXXXXXXXXXXXX"
 
+Pricing for the Street View Static API: https://developers.google.com/maps/documentation/streetview/usage-and-billing
 '''
 
 DEFAULT_STREETVIEW_PHOTO_FOLDER = "./photos/"
@@ -51,7 +52,7 @@ def main(lat_lon_A, lat_lon_B, filestem, picsize):
     # Assign images new filenames (and remove bad images)
     line_up_files(filestem, new_dir="./lineup-{0}/".format(filestem), command="cp")
     # Convert sequence of images to video
-    make_video(filestem, rate=20, video_string=filestem, picsize=picsize, basepath="./lineup-{0}/".format(filestem))
+    make_video(filestem, video_string=filestem, basepath="./lineup-{0}/".format(filestem))
 
 
 # TODO: Delete downloaded images

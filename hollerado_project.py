@@ -172,7 +172,7 @@ class timeline(object):
     def script_make_video(self):
         video_filename = self.new_stem + "vid"
         sound_filename = self.new_stem + "vid_sound"
-        make_video(self.new_stem, rate=self.fps, video_string=video_filename, picsize="640x640", basepath=self.base_path)
+        make_video(self.new_stem, video_string=video_filename,basepath=self.base_path)
         os.system("ffmpeg -i {0}.mp4 -i \"/Users/jordan/Music/iTunes/iTunes Music/Hollerado/Born Yesterday/02 Don't Shake.wav\" -shortest {1}.mp4 -y".format(video_filename, sound_filename))
         print("Video should have been successfully made here: {0}".format(sound_filename))
 

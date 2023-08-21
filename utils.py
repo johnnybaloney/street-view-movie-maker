@@ -381,13 +381,34 @@ def prune_repeated_images_from_list(list_of_files):
     return file_keepers
 
 
-def make_video(base_string, rate=20, video_string=None, picsize="640x640", basepath=DEFAULT_STREETVIEW_PHOTO_FOLDER):
+def make_video(base_string, video_string=None, basepath=DEFAULT_STREETVIEW_PHOTO_FOLDER):
     if video_string is None:
         video_string = base_string
-    print(basepath)
-    print(base_string)
-    print("ffmpeg -r {0} -f image2 -s {3} -i {4}/{1}%d{5} -vcodec libx264 -crf 25 -pix_fmt yuv420p {6}{2}.mp4 -y".format(
-        rate, base_string, video_string, picsize, basepath, DEFAULT_PHOTO_EXTENSION, DEFAULT_VIDEO_OUTPUT_FOLDER))
-    subprocess.call(
-        "ffmpeg -r {0} -f image2 -s {3} -i {4}/{1}%d{5} -vcodec libx264 -crf 25 -pix_fmt yuv420p {6}{2}.mp4 -y".format(
-            rate, base_string, video_string, picsize, basepath, DEFAULT_PHOTO_EXTENSION, DEFAULT_VIDEO_OUTPUT_FOLDER), shell=True)
+
+    # https://ffmpeg.org/ffmpeg.html
+    # -f image2 -> for creating video from many images
+    # -r framerate
+    # -s -> set frame size
+    # -i -> input
+    # -crf -> constant rate factor, the values will depend on which encoder you're using:
+    # For x264 your valid range is 0-51: where 0 is lossless, 23 is default, and 51 is the worst.
+    # For vpx the range is 4-63: lower values mean better quality.
+    # -pix_fmt -> Set pixel format. Use -pix_fmts to show all the supported pixel formats.
+    # -y -> overwrite output files without asking
+
+    # simply glued together at 1fps
+    # command = "ffmpeg -f image2 -r 1 -s 640x640 -i {2}{0}%d{3} -vcodec libx264 -crf 23 -pix_fmt yuv420p {4}{1}.mp4 -y".format(
+    #    base_string, video_string, basepath, DEFAULT_PHOTO_EXTENSION, DEFAULT_VIDEO_OUTPUT_FOLDER)
+
+    # http://underpop.online.fr/f/ffmpeg/help/framerate.htm.gz
+    # -vf framerate -> video filter 'framerate', this is an alias for -filter:v framerate
+    # fps -> desired fps
+    # interp_start -> the start of a range [0-255] where the output frame will be created as a linear interpolation of two frames
+    # interp_end -> end of a range [0-255] where the output frame will be created as a linear interpolation of two frames
+    # scene -> the level at which a scene change is detected as a value between 0 and 100 to indicate a new scene; a low value reflects a low probability for the current frame to introduce a new scene
+
+    # with interpolation at 30fps
+    command = "ffmpeg -f image2 -r 1 -s 640x640 -i {2}{0}%d{3} -vcodec libx264 -crf 23 -pix_fmt yuv420p -vf framerate='fps=30:interp_start=1:interp_end=254:scene=5' {4}{1}.mp4 -y".format(
+        base_string, video_string, basepath, DEFAULT_PHOTO_EXTENSION, DEFAULT_VIDEO_OUTPUT_FOLDER)
+    print(command)
+    subprocess.call(command, shell=True)
