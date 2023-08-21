@@ -1,7 +1,10 @@
-photos/*
+lineup-*/*
 API_KEY*
 *.pyc
 *.mp4
 sandbox.py
 lineup*/*
 debug.log
+.envrc
+.idea/
+.direnv/
